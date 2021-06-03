@@ -33,7 +33,7 @@ public class Init {
 			//init category first
 			int catIndex = Search.searchCategory(subject[1]);
 			if(catIndex == -1) {
-				System.out.println("Data Is Corrupted");
+				System.out.println("Data Is Corrupted, cannot find category of subject " + subject[1]);
 				throw new Exception();
 			}
 			Category c = allCategory.get(catIndex);
@@ -49,7 +49,7 @@ public class Init {
 			String[] task = STask.split("&,");
 			int catIndex = Search.searchSubject(task[0]);
 			if(catIndex == -1) {
-				System.out.println("Data Is Corrupted");
+				System.out.println("Data Is Corrupted for current task " + task[0]);
 				throw new Exception();
 			}
 			Subject s = allSubject.get(catIndex);
@@ -60,11 +60,13 @@ public class Init {
 	
 	public static void InitFinishedTask() throws Exception {
 		String[] SFinishedTask = RandW.readFinishedTask().split("&;");
+		
+		if(SFinishedTask.length == 1 && SFinishedTask[0].equals("")) return;
 		for(String STask : SFinishedTask) {
 			String[] task = STask.split("&,");
 			int catIndex = Search.searchSubject(task[0]);
 			if(catIndex == -1) {
-				System.out.println("Data Is Corrupted");
+				System.out.print("Data Is Corrupted for finished task " + task[0]);
 				throw new Exception();
 			}
 			Subject s = allSubject.get(catIndex);
